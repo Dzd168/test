@@ -1,4 +1,6 @@
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 import createNextIntlPlugin from "next-intl/plugin";
+
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -8,10 +10,10 @@ const nextConfig = {
     remotePatterns: [
       ...(process.env.R2_PUBLIC_URL
         ? [
-            {
-              hostname: process.env.R2_PUBLIC_URL.replace("https://", ""),
-            },
-          ]
+          {
+            hostname: process.env.R2_PUBLIC_URL.replace("https://", ""),
+          },
+        ]
         : []),
     ],
   },
@@ -19,10 +21,14 @@ const nextConfig = {
     removeConsole:
       process.env.NODE_ENV === "production"
         ? {
-            exclude: ["error"],
-          }
+          exclude: ["error"],
+        }
         : false,
   },
 };
+
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform();
+}
 
 export default withNextIntl(nextConfig);
