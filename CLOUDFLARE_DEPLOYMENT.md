@@ -16,25 +16,22 @@
 
 ## 部署步骤
 
-### 方法 1: 使用构建脚本（推荐）
+### 方法 1: 使用 npm 脚本（推荐）
 ```bash
-# 给脚本执行权限
-chmod +x build.sh
-
-# 运行构建
-./build.sh
+# 构建项目
+npm run pages:build
 
 # 部署到 Cloudflare Pages
 wrangler pages deploy .vercel/output/static --project-name=your-project-name
 ```
 
-### 方法 2: 手动部署
+### 方法 2: 使用构建脚本
 ```bash
-# 安装依赖
-pnpm install
+# 给脚本执行权限
+chmod +x build-cloudflare.sh
 
-# 构建项目
-pnpm dlx @cloudflare/next-on-pages
+# 运行构建
+./build-cloudflare.sh
 
 # 部署
 wrangler pages deploy .vercel/output/static --project-name=your-project-name
@@ -43,15 +40,16 @@ wrangler pages deploy .vercel/output/static --project-name=your-project-name
 ### 方法 3: 使用 package.json 脚本
 ```bash
 # 构建并部署
-pnpm run deploy
+npm run deploy
 ```
 
 ## Cloudflare Pages 配置
 
 ### 构建设置
-- **构建命令**: `./build.sh` 或 `pnpm dlx @cloudflare/next-on-pages`
+- **构建命令**: `npm run pages:build`
 - **构建输出目录**: `.vercel/output/static`
 - **Node.js 版本**: 20 (通过 `.nvmrc` 指定)
+- **包管理器**: npm (Cloudflare Pages 会自动检测)
 
 ### 环境变量
 确保在 Cloudflare Pages 控制台中设置以下环境变量：
