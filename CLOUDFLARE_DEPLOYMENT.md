@@ -46,10 +46,15 @@ npm run deploy
 ## Cloudflare Pages 配置
 
 ### 构建设置
-- **构建命令**: `npm run pages:build`
+- **构建命令**: `./build-cloudflare.sh`
 - **构建输出目录**: `.vercel/output/static`
 - **Node.js 版本**: 20 (通过 `.nvmrc` 指定)
 - **包管理器**: npm (Cloudflare Pages 会自动检测)
+
+### 重要提示
+如果 Cloudflare Pages 仍然使用 `npx @cloudflare/next-on-pages@1`，请：
+1. 在 Cloudflare Pages 控制台中手动设置构建命令为 `./build-cloudflare.sh`
+2. 或者使用 `npm run pages:build` 作为构建命令
 
 ### 环境变量
 确保在 Cloudflare Pages 控制台中设置以下环境变量：
