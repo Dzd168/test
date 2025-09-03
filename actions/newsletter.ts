@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 import { Resend } from 'resend';
 
 // initialize resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // Resend Audience ID
 const AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID!;
@@ -48,6 +48,11 @@ export async function subscribeToNewsletter(email: string) {
 
     if (!isValid) {
       throw new Error(error || 'Invalid email address');
+    }
+
+    // 检查 resend 是否已初始化
+    if (!resend) {
+      throw new Error('Email service is not configured');
     }
 
     // Check if already subscribed
@@ -101,6 +106,11 @@ export async function unsubscribeFromNewsletter(token: string) {
 
     if (!isValid) {
       throw new Error(error || 'Invalid email address');
+    }
+
+    // 检查 resend 是否已初始化
+    if (!resend) {
+      throw new Error('Email service is not configured');
     }
 
     // Check if subscribed

@@ -1,12 +1,13 @@
 import { Callout } from "@/components/mdx/Callout";
 import MDXComponents from "@/components/mdx/MDXComponents";
-import { Locale, LOCALES } from "@/i18n/routing";
-import { getPosts } from "@/lib/getBlogs";
+import { Locale } from "@/i18n/routing";
+import { getBlogPost } from "@/lib/blogContent";
 import { constructMetadata } from "@/lib/metadata";
-import { BlogPost } from "@/types/blog";
 import { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { notFound } from "next/navigation";
+
+export const runtime = 'edge';
 
 type Params = Promise<{
   locale: string;
@@ -21,8 +22,7 @@ export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  let { posts }: { posts: BlogPost[] } = await getPosts(locale);
-  const post = posts.find((post) => post.slug === "/" + slug);
+  const post = getBlogPost(locale, "/" + slug);
 
   if (!post) {
     return constructMetadata({
@@ -48,9 +48,7 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params }: { params: Params }) {
   const { locale, slug } = await params;
-  let { posts }: { posts: BlogPost[] } = await getPosts(locale);
-
-  const post = posts.find((item) => item.slug === "/" + slug);
+  const post = getBlogPost(locale, "/" + slug);
 
   if (!post) {
     return notFound();
@@ -84,20 +82,4 @@ export default async function BlogPage({ params }: { params: Params }) {
   );
 }
 
-export async function generateStaticParams() {
-  let posts = (await getPosts()).posts;
 
-  // Filter out posts without a slug
-  posts = posts.filter((post) => post.slug);
-
-  return LOCALES.flatMap((locale) =>
-    posts.map((post) => {
-      const slugPart = post.slug.replace(/^\//, "").replace(/^blog\//, "");
-
-      return {
-        locale,
-        slug: slugPart,
-      };
-    })
-  );
-}

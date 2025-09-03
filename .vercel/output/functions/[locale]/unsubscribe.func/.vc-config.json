@@ -1,0 +1,18 @@
+{
+  "runtime": "edge",
+  "name": "[locale]/unsubscribe",
+  "deploymentTarget": "v8-worker",
+  "entrypoint": "index.js",
+  "assets": [],
+  "framework": {
+    "slug": "nextjs",
+    "version": "15.2.4"
+  },
+  "environment": {
+    "__NEXT_BUILD_ID": "y5mhdkwKOsvNQ1dt3KXGG",
+    "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "Qebql0NTCpGDW5g7Eck7CfYumVPn++DfPXbnzBuf0ts=",
+    "__NEXT_PREVIEW_MODE_ID": "92359df6b51b5a3195ed6fdf7e30cd6b",
+    "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "edbc866bcec32111d9a9631c0375712374c380cc29883ffb8faa9e47943d2d44",
+    "__NEXT_PREVIEW_MODE_SIGNING_KEY": "0bb5253d63db0ad7d77107fa345c9fd6aeae1e00930f668c1a9eb749a58361c6"
+  }
+}
